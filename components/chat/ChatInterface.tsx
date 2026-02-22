@@ -4,6 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Markdown from "react-markdown";
 import ChatHeader from "./ChatHeader";
 import PopularItems from "./PopularItems";
 import CartReceipt from "./CartReceipt";
@@ -203,7 +204,21 @@ export default function ChatInterface() {
                         : "bg-brand-50 text-gray-800 border border-brand-100 rounded-bl-sm"
                     }`}
                   >
-                    {text}
+                    {isUser ? (
+                      text
+                    ) : (
+                      <Markdown
+                        components={{
+                          p: ({ children }) => <p className="mb-1.5 last:mb-0">{children}</p>,
+                          strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                          ul: ({ children }) => <ul className="list-disc pl-4 mb-1.5 space-y-0.5">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal pl-4 mb-1.5 space-y-0.5">{children}</ol>,
+                          li: ({ children }) => <li>{children}</li>,
+                        }}
+                      >
+                        {text}
+                      </Markdown>
+                    )}
                   </div>
                 </div>
               )}
